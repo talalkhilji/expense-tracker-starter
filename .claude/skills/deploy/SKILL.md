@@ -10,6 +10,12 @@ folder at the repo root that mirrors exactly what the latest production build wo
 ship. Run the three steps below in order, and stop immediately if a step fails —
 never let a broken or stale bundle reach `./staging`.
 
+Before running each numbered step, tell the user which command you're about to run
+and ask them to confirm before executing it (e.g. with AskUserQuestion, or by asking
+in chat and waiting for a reply) — don't chain straight through all three
+automatically. If the user declines a step, stop the deploy there without running
+the remaining steps.
+
 ## 1. Quality gate: tests and lint
 
 ```

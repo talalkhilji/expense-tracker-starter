@@ -24,33 +24,44 @@ function TransactionForm({ categories, onAdd }) {
   };
 
   return (
-    <div className="add-transaction">
-      <h2>Add Transaction</h2>
-      <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
+      <div className="field field-description">
+        <label htmlFor="tx-description">Description</label>
         <input
+          id="tx-description"
           type="text"
-          placeholder="Description"
+          placeholder="What was it for?"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
+      </div>
+      <div className="field field-amount">
+        <label htmlFor="tx-amount">Amount</label>
         <input
+          id="tx-amount"
           type="number"
-          placeholder="Amount"
+          placeholder="0.00"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
         />
-        <select value={type} onChange={(e) => setType(e.target.value)}>
+      </div>
+      <div className="field field-type">
+        <label htmlFor="tx-type">Type</label>
+        <select id="tx-type" value={type} onChange={(e) => setType(e.target.value)}>
           <option value="income">Income</option>
           <option value="expense">Expense</option>
         </select>
-        <select value={category} onChange={(e) => setCategory(e.target.value)}>
+      </div>
+      <div className="field field-category">
+        <label htmlFor="tx-category">Category</label>
+        <select id="tx-category" value={category} onChange={(e) => setCategory(e.target.value)}>
           {categories.map(cat => (
             <option key={cat} value={cat}>{cat}</option>
           ))}
         </select>
-        <button type="submit">Add</button>
-      </form>
-    </div>
+      </div>
+      <button type="submit">Record entry</button>
+    </form>
   );
 }
 

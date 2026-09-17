@@ -22,7 +22,7 @@ describe('TransactionList', () => {
     const user = userEvent.setup()
     render(<TransactionList transactions={transactions} categories={categories} onDelete={vi.fn()} />)
 
-    await user.selectOptions(screen.getByDisplayValue('All Types'), 'income')
+    await user.selectOptions(screen.getByLabelText('Filter by type'), 'income')
 
     expect(screen.getByText('Salary')).toBeInTheDocument()
     expect(screen.queryByText('Groceries')).not.toBeInTheDocument()
@@ -32,7 +32,7 @@ describe('TransactionList', () => {
     const user = userEvent.setup()
     render(<TransactionList transactions={transactions} categories={categories} onDelete={vi.fn()} />)
 
-    await user.selectOptions(screen.getByDisplayValue('All Categories'), 'food')
+    await user.selectOptions(screen.getByLabelText('Filter by category'), 'food')
 
     expect(screen.getByText('Groceries')).toBeInTheDocument()
     expect(screen.queryByText('Salary')).not.toBeInTheDocument()

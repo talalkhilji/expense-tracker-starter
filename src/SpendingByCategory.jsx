@@ -1,5 +1,6 @@
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
+import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { groupExpensesByCategory } from './spendingUtils.js'
+import { colorForCategory } from './categoryColors.js'
 
 function CustomTooltip({ active, payload, label }) {
   if (!active || !payload?.length) return null
@@ -15,38 +16,44 @@ function SpendingByCategory({ transactions }) {
   const data = groupExpensesByCategory(transactions)
 
   if (data.length === 0) {
-    return (
-      <div className="chart-card">
-        <h2>Spending by Category</h2>
-        <p className="chart-empty">No expenses yet.</p>
-      </div>
-    )
+    return <p className="chart-empty">No expenses yet.</p>
   }
 
   return (
-    <div className="chart-card">
-      <h2>Spending by Category</h2>
+    <>
+      <div className="chart-legend">
+        {data.map(({ category }) => (
+          <span className="chart-legend-item" key={category}>
+            <span className="category-dot" style={{ background: colorForCategory(category) }} />
+            {category}
+          </span>
+        ))}
+      </div>
       <ResponsiveContainer width="100%" height={280}>
         <BarChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
-          <CartesianGrid vertical={false} stroke="#e1e0d9" />
+          <CartesianGrid vertical={false} stroke="#e7e5e0" />
           <XAxis
             dataKey="category"
-            tick={{ fill: '#898781', fontSize: 12 }}
-            axisLine={{ stroke: '#c3c2b7' }}
+            tick={{ fill: '#6b7280', fontSize: 12, fontFamily: 'Inter, sans-serif' }}
+            axisLine={{ stroke: '#e7e5e0' }}
             tickLine={false}
           />
           <YAxis
-            tick={{ fill: '#898781', fontSize: 12 }}
+            tick={{ fill: '#6b7280', fontSize: 12, fontFamily: 'Space Grotesk, sans-serif' }}
             axisLine={false}
             tickLine={false}
             tickFormatter={(value) => `$${value.toLocaleString()}`}
             width={64}
           />
-          <Tooltip content={<CustomTooltip />} cursor={{ fill: '#f9f9f7' }} />
-          <Bar dataKey="amount" fill="#2a78d6" radius={[4, 4, 0, 0]} maxBarSize={40} />
+          <Tooltip content={<CustomTooltip />} cursor={{ fill: '#fafaf8' }} />
+          <Bar dataKey="amount" radius={[4, 4, 0, 0]} maxBarSize={40}>
+            {data.map(({ category }) => (
+              <Cell key={category} fill={colorForCategory(category)} />
+            ))}
+          </Bar>
         </BarChart>
       </ResponsiveContainer>
-    </div>
+    </>
   )
 }
 

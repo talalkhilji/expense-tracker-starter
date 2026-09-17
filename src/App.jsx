@@ -34,18 +34,36 @@ function App() {
     setTransactions(transactions.filter(t => t.id !== id));
   };
 
+  const today = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
   return (
     <div className="app">
-      <h1>Finance Tracker</h1>
-      <p className="subtitle">Track your income and expenses</p>
+      <header className="masthead">
+        <div>
+          <h1>Ledger</h1>
+          <p className="subtitle">A running record of what comes in and what goes out.</p>
+        </div>
+        <span className="stamp">{today}</span>
+      </header>
 
-      <Summary transactions={transactions} />
+      <section className="section">
+        <Summary transactions={transactions} />
+      </section>
 
-      <SpendingByCategory transactions={transactions} />
+      <section className="section">
+        <h2>Spending by category</h2>
+        <SpendingByCategory transactions={transactions} />
+      </section>
 
-      <TransactionForm categories={categories} onAdd={handleAddTransaction} />
+      <section className="section">
+        <h2>New entry</h2>
+        <TransactionForm categories={categories} onAdd={handleAddTransaction} />
+      </section>
 
-      <TransactionList transactions={transactions} categories={categories} onDelete={handleDeleteTransaction} />
+      <section className="section">
+        <h2>Register</h2>
+        <TransactionList transactions={transactions} categories={categories} onDelete={handleDeleteTransaction} />
+      </section>
     </div>
   );
 }

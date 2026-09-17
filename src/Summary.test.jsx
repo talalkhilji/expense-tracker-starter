@@ -13,16 +13,17 @@ describe('Summary', () => {
 
     render(<Summary transactions={transactions} />)
 
-    expect(screen.getByText('$1500')).toBeInTheDocument()
-    expect(screen.getByText('$300')).toBeInTheDocument()
-    expect(screen.getByText('$1200')).toBeInTheDocument()
+    expect(screen.getByText('+$1,500')).toBeInTheDocument()
+    expect(screen.getByText('-$300')).toBeInTheDocument()
+    expect(screen.getByText('$1,200')).toBeInTheDocument()
   })
 
   it('renders zeros for an empty transaction list', () => {
     render(<Summary transactions={[]} />)
 
-    const amounts = screen.getAllByText('$0')
-    expect(amounts).toHaveLength(3)
+    expect(screen.getByText('$0')).toBeInTheDocument()
+    expect(screen.getByText('+$0')).toBeInTheDocument()
+    expect(screen.getByText('-$0')).toBeInTheDocument()
   })
 
   it('allows balance to go negative when expenses exceed income', () => {
@@ -33,6 +34,6 @@ describe('Summary', () => {
 
     render(<Summary transactions={transactions} />)
 
-    expect(screen.getByText('$-200')).toBeInTheDocument()
+    expect(screen.getByText('-$200')).toBeInTheDocument()
   })
 })

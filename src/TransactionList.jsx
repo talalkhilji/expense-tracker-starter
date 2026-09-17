@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { colorForCategory } from './categoryColors.js'
 
 function TransactionList({ transactions, categories, onDelete }) {
   const [filterType, setFilterType] = useState("all");
@@ -13,16 +14,15 @@ function TransactionList({ transactions, categories, onDelete }) {
   }
 
   return (
-    <div className="transactions">
-      <h2>Transactions</h2>
+    <div>
       <div className="filters">
-        <select value={filterType} onChange={(e) => setFilterType(e.target.value)}>
-          <option value="all">All Types</option>
+        <select aria-label="Filter by type" value={filterType} onChange={(e) => setFilterType(e.target.value)}>
+          <option value="all">All types</option>
           <option value="income">Income</option>
           <option value="expense">Expense</option>
         </select>
-        <select value={filterCategory} onChange={(e) => setFilterCategory(e.target.value)}>
-          <option value="all">All Categories</option>
+        <select aria-label="Filter by category" value={filterCategory} onChange={(e) => setFilterCategory(e.target.value)}>
+          <option value="all">All categories</option>
           {categories.map(cat => (
             <option key={cat} value={cat}>{cat}</option>
           ))}
@@ -35,7 +35,7 @@ function TransactionList({ transactions, categories, onDelete }) {
             <th>Date</th>
             <th>Description</th>
             <th>Category</th>
-            <th>Amount</th>
+            <th className="amount-col">Amount</th>
             <th></th>
           </tr>
         </thead>
@@ -44,9 +44,12 @@ function TransactionList({ transactions, categories, onDelete }) {
             <tr key={t.id}>
               <td>{t.date}</td>
               <td>{t.description}</td>
-              <td>{t.category}</td>
-              <td className={t.type === "income" ? "income-amount" : "expense-amount"}>
-                {t.type === "income" ? "+" : "-"}${t.amount}
+              <td className="category-cell">
+                <span className="category-dot" style={{ background: colorForCategory(t.category) }} />
+                {t.category}
+              </td>
+              <td className={`amount ${t.type === "income" ? "income-amount" : "expense-amount"}`}>
+                {t.type === "income" ? "+" : "-"}${t.amount.toLocaleString()}
               </td>
               <td>
                 <button

@@ -12,9 +12,9 @@ describe('TransactionForm', () => {
 
     render(<TransactionForm categories={categories} onAdd={onAdd} />)
 
-    await user.type(screen.getByPlaceholderText('Description'), 'Coffee')
-    await user.type(screen.getByPlaceholderText('Amount'), '4.5')
-    await user.click(screen.getByRole('button', { name: 'Add' }))
+    await user.type(screen.getByLabelText('Description'), 'Coffee')
+    await user.type(screen.getByLabelText('Amount'), '4.5')
+    await user.click(screen.getByRole('button', { name: 'Record entry' }))
 
     expect(onAdd).toHaveBeenCalledTimes(1)
     const submitted = onAdd.mock.calls[0][0]
@@ -22,8 +22,8 @@ describe('TransactionForm', () => {
     expect(submitted.amount).toBe(4.5)
     expect(typeof submitted.amount).toBe('number')
 
-    expect(screen.getByPlaceholderText('Description')).toHaveValue('')
-    expect(screen.getByPlaceholderText('Amount')).toHaveValue(null)
+    expect(screen.getByLabelText('Description')).toHaveValue('')
+    expect(screen.getByLabelText('Amount')).toHaveValue(null)
   })
 
   it('does not call onAdd when description or amount is missing', async () => {
@@ -32,7 +32,7 @@ describe('TransactionForm', () => {
 
     render(<TransactionForm categories={categories} onAdd={onAdd} />)
 
-    await user.click(screen.getByRole('button', { name: 'Add' }))
+    await user.click(screen.getByRole('button', { name: 'Record entry' }))
 
     expect(onAdd).not.toHaveBeenCalled()
   })

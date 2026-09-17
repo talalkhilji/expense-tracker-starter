@@ -8,9 +8,9 @@ describe('App', () => {
     const user = userEvent.setup()
     render(<App />)
 
-    await user.type(screen.getByPlaceholderText('Description'), 'Coffee')
-    await user.type(screen.getByPlaceholderText('Amount'), '4.5')
-    await user.click(screen.getByRole('button', { name: 'Add' }))
+    await user.type(screen.getByLabelText('Description'), 'Coffee')
+    await user.type(screen.getByLabelText('Amount'), '4.5')
+    await user.click(screen.getByRole('button', { name: 'Record entry' }))
 
     const today = new Date().toISOString().split('T')[0]
     const row = screen.getByText('Coffee').closest('tr')
