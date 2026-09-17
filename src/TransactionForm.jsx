@@ -8,7 +8,7 @@ function TransactionForm({ categories, onAdd }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!description || !amount) return;
+    if (!description || !(Number(amount) > 0)) return;
 
     onAdd({
       description,
@@ -40,6 +40,8 @@ function TransactionForm({ categories, onAdd }) {
         <input
           id="tx-amount"
           type="number"
+          min="0.01"
+          step="0.01"
           placeholder="0.00"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}

@@ -5,24 +5,23 @@
 }
 
 :root {
-  --surface: #fafaf8;
-  --surface-raised: #ffffff;
-  --ink: #14171c;
-  --ink-soft: #6b7280;
-  --line: #e7e5e0;
-  --accent: #4f46e5;
-  --accent-soft: #ececfe;
-  --credit: #16a34a;
-  --debit: #e1483c;
-  --radius: 8px;
+  --canvas: #efe3ce;
+  --canvas-raised: #f7f1e3;
+  --ink: #3b2f22;
+  --ink-soft: #8a7b63;
+  --line: #d8c9a8;
+  --credit: #2f6b4f;
+  --debit: #b0413e;
+  --accent: #7a4a16;
+  --radius: 4px;
 
-  --font-display: 'Space Grotesk', system-ui, sans-serif;
-  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-sans: 'Work Sans', system-ui, sans-serif;
 }
 
 body {
   font-family: var(--font-sans);
-  background-color: var(--surface);
+  background-color: var(--canvas);
   color: var(--ink);
 }
 

@@ -8,7 +8,7 @@
 
 .masthead {
   display: flex;
-  align-items: flex-start;
+  align-items: baseline;
   justify-content: space-between;
   gap: 24px;
   padding-bottom: 28px;
@@ -20,7 +20,6 @@
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 28px;
-  letter-spacing: -0.01em;
 }
 
 .subtitle {
@@ -34,11 +33,6 @@
   flex-shrink: 0;
   font-size: 13px;
   color: var(--ink-soft);
-  background: var(--surface-raised);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: 6px 14px;
-  white-space: nowrap;
 }
 
 /* ---------- shared section rhythm ---------- */
@@ -73,9 +67,8 @@
 .balance-amount {
   font-family: var(--font-display);
   font-variant-numeric: tabular-nums;
-  font-weight: 700;
-  font-size: 44px;
-  letter-spacing: -0.01em;
+  font-weight: 600;
+  font-size: 42px;
 }
 
 .balance-amount.negative {
@@ -100,7 +93,7 @@
 }
 
 .summary-line .figure {
-  font-family: var(--font-display);
+  font-family: var(--font-sans);
   font-variant-numeric: tabular-nums;
   font-weight: 600;
   font-size: 17px;
@@ -114,54 +107,53 @@
   color: var(--debit);
 }
 
-/* ---------- chart ---------- */
+/* ---------- spending envelopes ---------- */
 
 .chart-empty {
   color: var(--ink-soft);
   font-size: 14px;
 }
 
-.chart-legend {
+.envelopes {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px 18px;
-  margin-bottom: 16px;
+  gap: 14px;
 }
 
-.chart-legend-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12.5px;
-  color: var(--ink-soft);
-}
-
-.category-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.chart-tooltip {
-  background: var(--surface-raised);
+.envelope {
+  flex: 1 1 116px;
+  max-width: 150px;
+  background: var(--canvas-raised);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 8px 12px;
+  overflow: hidden;
 }
 
-.chart-tooltip-label {
-  font-size: 12px;
-  color: var(--ink-soft);
-  margin-bottom: 2px;
+.envelope-flap {
+  height: 26px;
+  background: var(--line);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
 }
 
-.chart-tooltip-value {
+.envelope-body {
+  padding: 10px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.envelope-category {
   font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 13.5px;
+  text-transform: capitalize;
+}
+
+.envelope-amount {
+  font-family: var(--font-sans);
   font-variant-numeric: tabular-nums;
-  font-size: 14px;
   font-weight: 600;
-  color: var(--ink);
+  font-size: 15px;
 }
 
 /* ---------- new entry form ---------- */
@@ -202,14 +194,13 @@ form select {
   font-family: var(--font-sans);
   font-size: 14.5px;
   color: var(--ink);
-  background: var(--surface-raised);
+  background: var(--canvas-raised);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 9px 12px;
 }
 
 form input[type='number'] {
-  font-family: var(--font-display);
   font-variant-numeric: tabular-nums;
 }
 
@@ -217,7 +208,6 @@ form input:focus,
 form select:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
 form button {
@@ -233,7 +223,7 @@ form button {
 }
 
 form button:hover {
-  background: #4338ca;
+  background: #5c3711;
 }
 
 form button:focus-visible,
@@ -253,10 +243,10 @@ form button:focus-visible,
 
 .filters select {
   font-family: var(--font-sans);
-  padding: 6px 14px;
+  padding: 6px 10px;
   border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--surface-raised);
+  border-radius: var(--radius);
+  background: var(--canvas-raised);
   color: var(--ink);
   font-size: 13px;
 }
@@ -264,7 +254,6 @@ form button:focus-visible,
 .filters select:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
 table {
@@ -286,27 +275,25 @@ thead th {
   border-bottom: 1px solid var(--line);
 }
 
+td.category-cell {
+  text-transform: capitalize;
+  color: var(--ink-soft);
+}
+
 tbody tr {
   border-bottom: 1px solid var(--line);
   transition: background-color 0.1s ease;
 }
 
 tbody tr:hover {
-  background: var(--surface-raised);
+  background: var(--canvas-raised);
 }
 
 tbody tr:last-child {
   border-bottom: none;
 }
 
-td.category-cell {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
 td.amount {
-  font-family: var(--font-display);
   font-variant-numeric: tabular-nums;
   font-weight: 600;
   text-align: right;
@@ -342,10 +329,14 @@ th.amount-col {
   }
 
   .balance-amount {
-    font-size: 34px;
+    font-size: 32px;
   }
 
   form {
     gap: 14px;
+  }
+
+  .envelope {
+    flex: 1 1 100px;
   }
 }

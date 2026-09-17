@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { colorForCategory } from './categoryColors.js'
 
 function TransactionList({ transactions, categories, onDelete }) {
   const [filterType, setFilterType] = useState("all");
@@ -44,10 +43,7 @@ function TransactionList({ transactions, categories, onDelete }) {
             <tr key={t.id}>
               <td>{t.date}</td>
               <td>{t.description}</td>
-              <td className="category-cell">
-                <span className="category-dot" style={{ background: colorForCategory(t.category) }} />
-                {t.category}
-              </td>
+              <td className="category-cell">{t.category}</td>
               <td className={`amount ${t.type === "income" ? "income-amount" : "expense-amount"}`}>
                 {t.type === "income" ? "+" : "-"}${t.amount.toLocaleString()}
               </td>

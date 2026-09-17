@@ -34,12 +34,13 @@ describe('SpendingByCategory', () => {
     expect(screen.getByText('No expenses yet.')).toBeInTheDocument()
   })
 
-  it('renders a chart instead of the empty state once there is an expense', () => {
+  it('renders an envelope instead of the empty state once there is an expense', () => {
     const transactions = [{ id: 1, type: 'expense', amount: 100, category: 'food' }]
 
-    const { container } = render(<SpendingByCategory transactions={transactions} />)
+    render(<SpendingByCategory transactions={transactions} />)
 
     expect(screen.queryByText('No expenses yet.')).not.toBeInTheDocument()
-    expect(container.querySelector('.recharts-responsive-container')).toBeInTheDocument()
+    expect(screen.getByText('food')).toBeInTheDocument()
+    expect(screen.getByText('$100')).toBeInTheDocument()
   })
 })

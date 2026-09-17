@@ -14,14 +14,14 @@ This is the starter project for a Claude Code course (codewithmosh.com). It's a 
 - `npm run lint` — run ESLint over the project
 - `npm test` — run the unit test suite once with Vitest
 
-Tests live alongside the source files they cover (`src/*.test.jsx`), using Vitest + React Testing Library. Setup (jsdom polyfills for recharts' `ResizeObserver`/layout measurement) lives in `src/test/setup.js`, wired in via `vite.config.js`'s `test` block.
+Tests live alongside the source files they cover (`src/*.test.jsx`), using Vitest + React Testing Library. `src/test/setup.js` (wired in via `vite.config.js`'s `test` block) still polyfills `ResizeObserver`/layout measurement for jsdom, a holdover from when `SpendingByCategory` rendered a Recharts chart — harmless to keep even though nothing currently depends on it.
 
 ## Architecture
 
 `src/App.jsx` (mounted by `src/main.jsx`) is the top-level component. It owns the `transactions` array (`useState`) and the hardcoded `categories` list, and composes four child components. There is no routing and no external state management — state is local `useState`, split across components by responsibility rather than centralized in `App`.
 
 - **`src/Summary.jsx`** — takes `transactions` as a prop and internally computes `totalIncome`, `totalExpenses`, and `balance` via `reduce`, rendering the three summary cards.
-- **`src/SpendingByCategory.jsx`** — takes `transactions` as a prop, groups expense amounts by `category` via `groupExpensesByCategory` (in `src/spendingUtils.js` — kept out of the component file so it stays a pure, directly-testable function and so `SpendingByCategory.jsx` only exports the component, per the `react-refresh/only-export-components` lint rule), and renders the result as a Recharts bar chart.
+- **`src/SpendingByCategory.jsx`** — takes `transactions` as a prop, groups expense amounts by `category` via `groupExpensesByCategory` (in `src/spendingUtils.js` — kept out of the component file so it stays a pure, directly-testable function and so `SpendingByCategory.jsx` only exports the component, per the `react-refresh/only-export-components` lint rule), and renders the result as a grid of per-category "envelope" tiles (no charting library — Recharts is still a dependency but nothing imports it currently).
 - **`src/TransactionForm.jsx`** — owns its own form field state (`description`, `amount`, `type`, `category`). On submit it calls the `onAdd` prop with the new transaction's data (`{ description, amount, type, category }`, with `amount` coerced via `Number(...)`); it does not know about `id` or `date` generation.
 - **`src/TransactionList.jsx`** — takes `transactions` and `categories` as props, owns its own filter state (`filterType`, `filterCategory`), and renders the filter dropdowns plus the transactions table from the locally filtered list.
 
