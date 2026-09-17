@@ -1,4 +1,5 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
+import { groupExpensesByCategory } from './spendingUtils.js'
 
 function CustomTooltip({ active, payload, label }) {
   if (!active || !payload?.length) return null
@@ -11,16 +12,7 @@ function CustomTooltip({ active, payload, label }) {
 }
 
 function SpendingByCategory({ transactions }) {
-  const totals = transactions
-    .filter(t => t.type === 'expense')
-    .reduce((acc, t) => {
-      acc[t.category] = (acc[t.category] || 0) + t.amount
-      return acc
-    }, {})
-
-  const data = Object.entries(totals)
-    .map(([category, amount]) => ({ category, amount }))
-    .sort((a, b) => b.amount - a.amount)
+  const data = groupExpensesByCategory(transactions)
 
   if (data.length === 0) {
     return (
